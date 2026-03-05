@@ -6,26 +6,28 @@
   <title>Возврат в бот</title>
   <style>
     body { font-family: system-ui, sans-serif; text-align: center; padding: 2rem; max-width: 400px; margin: 0 auto; }
-    .btn { display: inline-block; margin-top: 1rem; padding: 12px 24px; background: #0088cc; color: #fff; text-decoration: none; border-radius: 8px; font-size: 18px; }
-    .btn:hover { background: #006699; }
-    p { color: #666; }
+    .btn { display: inline-block; margin-top: 1rem; padding: 14px 28px; background: #0088cc; color: #fff; text-decoration: none; border-radius: 8px; font-size: 18px; border: none; cursor: pointer; width: 100%; box-sizing: border-box; }
+    p { color: #333; }
+    .hint { font-size: 14px; color: #666; margin-top: 1.5rem; }
   </style>
 </head>
 <body>
   <p id="msg">Перенаправление...</p>
   <a id="link" href="#" class="btn" style="display:none;">Открыть в Telegram</a>
+  <p class="hint" id="hint"></p>
   <script>
     var c = new URLSearchParams(location.search).get('code');
     if (c) {
-      var tme = 'https://t.me/buyStarsV1nSk1_bot?start=ym_' + encodeURIComponent(c);
-      var tg = 'tg://resolve?domain=buyStarsV1nSk1_bot&start=ym_' + encodeURIComponent(c);
+      var url = 'https://t.me/buyStarsV1nSk1_bot?start=ym_' + encodeURIComponent(c);
       var link = document.getElementById('link');
-      link.href = tg;
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noopener';
       link.style.display = 'inline-block';
-      link.textContent = 'Открыть в Telegram';
-      document.getElementById('msg').textContent = 'Нажми кнопку ниже, если не перенаправило само:';
-      try { location.href = tme; } catch (e) {}
-      setTimeout(function() { location.href = tme; }, 800);
+      document.getElementById('msg').textContent = 'Нажми кнопку ниже:';
+      document.getElementById('hint').textContent = 'Если не откроется — скопируй ссылку и вставь в браузере или отправь себе в Telegram.';
+      try { window.location.href = url; } catch (e) {}
+      setTimeout(function() { window.location.href = url; }, 500);
     } else {
       document.getElementById('msg').textContent = 'Код не получен. Вернись в бот.';
     }
