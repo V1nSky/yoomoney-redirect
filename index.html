@@ -1,9 +1,34 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"><title>Возврат в бот</title></head>
-<body><p>Перенаправление...</p>
-<script>
-var c = new URLSearchParams(location.search).get('code');
-if (c) location.href = 'https://t.me/buyStarsV1nSk1_bot?start=ym_' + encodeURIComponent(c);
-else document.body.innerHTML = '<p>Код не получен.</p>';
-</script>
-</body></html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Возврат в бот</title>
+  <style>
+    body { font-family: system-ui, sans-serif; text-align: center; padding: 2rem; max-width: 400px; margin: 0 auto; }
+    .btn { display: inline-block; margin-top: 1rem; padding: 12px 24px; background: #0088cc; color: #fff; text-decoration: none; border-radius: 8px; font-size: 18px; }
+    .btn:hover { background: #006699; }
+    p { color: #666; }
+  </style>
+</head>
+<body>
+  <p id="msg">Перенаправление...</p>
+  <a id="link" href="#" class="btn" style="display:none;">Открыть в Telegram</a>
+  <script>
+    var c = new URLSearchParams(location.search).get('code');
+    if (c) {
+      var tme = 'https://t.me/buyStarsV1nSk1_bot?start=ym_' + encodeURIComponent(c);
+      var tg = 'tg://resolve?domain=buyStarsV1nSk1_bot&start=ym_' + encodeURIComponent(c);
+      var link = document.getElementById('link');
+      link.href = tg;
+      link.style.display = 'inline-block';
+      link.textContent = 'Открыть в Telegram';
+      document.getElementById('msg').textContent = 'Нажми кнопку ниже, если не перенаправило само:';
+      try { location.href = tme; } catch (e) {}
+      setTimeout(function() { location.href = tme; }, 800);
+    } else {
+      document.getElementById('msg').textContent = 'Код не получен. Вернись в бот.';
+    }
+  </script>
+</body>
+</html>
